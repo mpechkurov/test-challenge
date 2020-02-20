@@ -2,25 +2,18 @@ package blog.rest.api;
 
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import blog.models.User;
-import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 
 import static io.restassured.RestAssured.given;
 import static org.apache.http.HttpStatus.SC_OK;
 import static org.junit.Assert.assertEquals;
 
-public class UsersEndpointTest {
+public class UsersEndpointTest extends TestBase {
 
     public static final int DEFAULT_USER_AMOUNT = 10;
-
-    @Before
-    public void setUp() {
-        RestAssured.baseURI = "https://jsonplaceholder.typicode.com";
-    }
 
     @Test
     public void getUsersValidation() {
