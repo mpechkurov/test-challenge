@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import blog.models.Post;
+import blog.utils.TestBase;
 import blog.utils.UserUtils;
 import io.restassured.http.ContentType;
 

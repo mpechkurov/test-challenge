@@ -1,4 +1,4 @@
-package blog.rest.api;
+package blog.utils;
 
 import io.restassured.RestAssured;
 

@@ -3,7 +3,6 @@ package blog.utils;
 import java.util.List;
 
 import blog.models.User;
-import blog.rest.api.TestBase;
 
 import static io.restassured.RestAssured.given;
 import static java.util.Objects.requireNonNull;

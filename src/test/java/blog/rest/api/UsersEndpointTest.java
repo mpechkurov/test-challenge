@@ -5,6 +5,7 @@ import java.util.List;
 import org.junit.Test;
 
 import blog.models.User;
+import blog.utils.TestBase;
 import io.restassured.http.ContentType;
 
 import static io.restassured.RestAssured.given;
