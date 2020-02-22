@@ -16,6 +16,8 @@ import static org.junit.Assert.assertEquals;
 
 public class PostsEndpointTest extends TestBase {
 
+    public static final Integer EXPECTED_USER_ID = 3;
+    public static final String USER_NAME = "Samantha";
     private UserUtils userUtils;
 
     @Before
@@ -30,19 +32,19 @@ public class PostsEndpointTest extends TestBase {
             .get("/posts")
             .then()
             .assertThat().statusCode(SC_OK).contentType(ContentType.JSON)
-            .extract().body().jsonPath().getList(".", Post.class);
+            .extract().body().jsonPath().getList(ROOT_ELEMENT, Post.class);
     }
 
     @Test
     public void getAllPostsWrittenByUser() {
-        String userId = userUtils.getUserIdByName("Samantha");
+        String userId = userUtils.getUserIdByName(USER_NAME);
         List<Post> postList = given()
                                   .param("userId", userId)
                                   .when()
                                   .get("/posts")
                                   .then()
                                   .assertThat().statusCode(SC_OK).contentType(ContentType.JSON)
-                                  .extract().body().jsonPath().getList(".", Post.class);
-        postList.forEach(x -> assertEquals(3, (int) x.getUserId()));
+                                  .extract().body().jsonPath().getList(ROOT_ELEMENT, Post.class);
+        postList.forEach(x -> assertEquals("Wrong userId. ", EXPECTED_USER_ID, x.getUserId()));
     }
 }

@@ -26,7 +26,7 @@ public class UsersEndpointTest extends TestBase {
                                   .extract()
                                   .body()
                                   .jsonPath()
-                                  .getList(".", User.class);
+                                  .getList(ROOT_ELEMENT, User.class);
         assertEquals("Endpoint return wrong user amount or user model. ", DEFAULT_USER_AMOUNT, userList.size());
     }
 }

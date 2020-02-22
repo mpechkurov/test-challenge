@@ -15,7 +15,6 @@ import static org.junit.Assert.assertTrue;
 
 public class CommentsEndpointTest extends TestBase {
 
-    private static final String EMAIL_REGEX = "^[\\w-+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$";
     private static final int POST_ID_NUMBER = 1;
     private static final int EXPECTED_COMMENT_AMOUNT = 5;
 
@@ -26,7 +25,7 @@ public class CommentsEndpointTest extends TestBase {
             .get("/comments")
             .then()
             .assertThat().statusCode(SC_OK).contentType(ContentType.JSON)
-            .extract().body().jsonPath().getList(".", Comment.class);
+            .extract().body().jsonPath().getList(ROOT_ELEMENT, Comment.class);
     }
 
     @Test
@@ -37,9 +36,9 @@ public class CommentsEndpointTest extends TestBase {
                                         .get("/comments")
                                         .then()
                                         .assertThat().statusCode(SC_OK).contentType(ContentType.JSON)
-                                        .extract().body().jsonPath().getList(".", Comment.class);
+                                        .extract().body().jsonPath().getList(ROOT_ELEMENT, Comment.class);
         assertEquals(EXPECTED_COMMENT_AMOUNT, commentList.size());
-        commentList.forEach(x -> assertEquals(POST_ID_NUMBER, (int) x.getPostId()));
+        commentList.forEach(x -> assertEquals("Wrong postId. ", POST_ID_NUMBER, (int) x.getPostId()));
     }
 
     @Test
@@ -50,9 +49,9 @@ public class CommentsEndpointTest extends TestBase {
                                         .get("/posts/{postId}/comments")
                                         .then()
                                         .assertThat().statusCode(SC_OK).contentType(ContentType.JSON)
-                                        .extract().body().jsonPath().getList(".", Comment.class);
+                                        .extract().body().jsonPath().getList(ROOT_ELEMENT, Comment.class);
         assertEquals(EXPECTED_COMMENT_AMOUNT, commentList.size());
-        commentList.forEach(x -> assertEquals(POST_ID_NUMBER, (int) x.getPostId()));
+        commentList.forEach(x -> assertEquals("Wrong postId. ", POST_ID_NUMBER, (int) x.getPostId()));
     }
 
     @Test
@@ -61,7 +60,7 @@ public class CommentsEndpointTest extends TestBase {
                                         .when()
                                         .get("/comments")
                                         .then()
-                                        .extract().body().jsonPath().getList(".", Comment.class);
-        commentList.forEach(x -> assertTrue(x.getEmail().matches(EMAIL_REGEX)));
+                                        .extract().body().jsonPath().getList(ROOT_ELEMENT, Comment.class);
+        commentList.forEach(x -> assertTrue("Wrong email format. ", x.getEmail().matches(EMAIL_REGEX)));
     }
 }
