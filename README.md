@@ -1,3 +1,5 @@
+[![test](https://circleci.com/gh/mpechkurov/test-challenge.svg?style=svg)](https://circleci.com/gh/mpechkurov/test-challenge)
+
 # test-challenge
 Backend Test Challenge
 
