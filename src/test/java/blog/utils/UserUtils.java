@@ -13,9 +13,12 @@ import static java.util.Objects.requireNonNull;
 
 public class UserUtils extends TestBase {
 
+    public static final String USER_ID_PARAMETER = "userId";
+    public static final String POST_ID_PARAMETER = "postId";
+
     public String getUserIdByName(String userName) {
         List<User> userList = given()
-                                  .get("/users")
+                                  .get(EndPoints.users)
                                   .then()
                                   .extract().body().jsonPath().getList(".", User.class);
 
@@ -29,9 +32,9 @@ public class UserUtils extends TestBase {
 
     public List<String> getAllPostIdsByUserId(String userId) {
         List<Post> postList = given()
-                                  .param("userId", userId)
+                                  .param(USER_ID_PARAMETER, userId)
                                   .when()
-                                  .get("/posts")
+                                  .get(EndPoints.posts)
                                   .then()
                                   .extract().body().jsonPath().getList(".", Post.class);
         return postList.stream().map(post -> Integer.toString(post.getId())).collect(Collectors.toList());
@@ -39,9 +42,9 @@ public class UserUtils extends TestBase {
 
     public List<Comment> getCommentsForPostId(String postId) {
         return given()
-                   .pathParam("postId", postId)
+                   .pathParam(POST_ID_PARAMETER, postId)
                    .when()
-                   .get("/posts/{postId}/comments")
+                   .get(EndPoints.commentsForPostId)
                    .then()
                    .extract().body().jsonPath().getList(ROOT_ELEMENT, Comment.class);
     }
