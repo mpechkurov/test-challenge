@@ -5,7 +5,7 @@ import java.util.List;
 import org.junit.Test;
 
 import blog.models.User;
-import blog.utils.EndPoints;
+import blog.utils.Endpoints;
 import blog.utils.TestBase;
 import io.restassured.http.ContentType;
 
@@ -21,7 +21,7 @@ public class UsersEndpointTest extends TestBase {
     public void getUsersValidation() {
         List<User> userList = given()
                                   .when()
-                                  .get(EndPoints.users)
+                                  .get(Endpoints.USERS.getEndpoint())
                                   .then()
                                   .assertThat().statusCode(SC_OK).contentType(ContentType.JSON)
                                   .extract()

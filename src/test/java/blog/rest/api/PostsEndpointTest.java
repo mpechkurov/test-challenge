@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import blog.models.Post;
-import blog.utils.EndPoints;
+import blog.utils.Endpoints;
 import blog.utils.TestBase;
 import blog.utils.UserUtils;
 import io.restassured.http.ContentType;
@@ -42,7 +42,7 @@ public class PostsEndpointTest extends TestBase {
     public void getAllPostsValidation() {
         given()
             .when()
-            .get(EndPoints.posts)
+            .get(Endpoints.POSTS.getEndpoint())
             .then()
             .assertThat().statusCode(SC_OK).contentType(ContentType.JSON)
             .extract().body().jsonPath().getList(ROOT_ELEMENT, Post.class);
@@ -54,7 +54,7 @@ public class PostsEndpointTest extends TestBase {
         List<Post> postList = given()
                                   .param(POST_USER_ID, userId)
                                   .when()
-                                  .get(EndPoints.posts)
+                                  .get(Endpoints.POSTS.getEndpoint())
                                   .then()
                                   .assertThat().statusCode(SC_OK).contentType(ContentType.JSON)
                                   .extract().body().jsonPath().getList(ROOT_ELEMENT, Post.class);
@@ -66,7 +66,7 @@ public class PostsEndpointTest extends TestBase {
         Post actualPost = given()
                               .contentType(ContentType.JSON)
                               .body(newPost)
-                              .post(EndPoints.posts)
+                              .post(Endpoints.POSTS.getEndpoint())
                               .then().assertThat().statusCode(SC_CREATED).contentType(ContentType.JSON)
                               .extract().body().jsonPath().getObject(ROOT_ELEMENT, Post.class);
         assertTrue("Wrong response data. ", EqualsBuilder.reflectionEquals(newPost, actualPost, POST_ID));
@@ -79,7 +79,7 @@ public class PostsEndpointTest extends TestBase {
                               .pathParam(POST_ID, POST_ID_NUMBER)
                               .contentType(ContentType.JSON)
                               .body(newPost)
-                              .put(EndPoints.posts_id)
+                              .put(Endpoints.POST_ID.getEndpoint())
                               .then().assertThat().statusCode(SC_OK).contentType(ContentType.JSON)
                               .extract().body().jsonPath().getObject(ROOT_ELEMENT, Post.class);
         assertTrue("Wrong response data. ", EqualsBuilder.reflectionEquals(newPost, actualPost));
@@ -93,7 +93,7 @@ public class PostsEndpointTest extends TestBase {
                               .pathParam(POST_ID, POST_ID_NUMBER)
                               .contentType(ContentType.JSON)
                               .body(body)
-                              .patch(EndPoints.posts_id)
+                              .patch(Endpoints.POST_ID.getEndpoint())
                               .then().assertThat().statusCode(SC_OK).contentType(ContentType.JSON)
                               .extract().body().jsonPath().getObject(ROOT_ELEMENT, Post.class);
         assertTrue(EqualsBuilder.reflectionEquals(newPost, actualPost, POST_USER_ID, POST_BODY));
@@ -104,7 +104,7 @@ public class PostsEndpointTest extends TestBase {
         given()
             .pathParam(POST_ID, POST_ID_NUMBER)
             .contentType(ContentType.JSON)
-            .delete(EndPoints.posts_id)
+            .delete(Endpoints.POST_ID.getEndpoint())
             .then().assertThat().statusCode(SC_OK).contentType(ContentType.JSON);
     }
 

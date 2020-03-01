@@ -5,7 +5,7 @@ import java.util.List;
 import org.junit.Test;
 
 import blog.models.Comment;
-import blog.utils.EndPoints;
+import blog.utils.Endpoints;
 import blog.utils.TestBase;
 import io.restassured.http.ContentType;
 
@@ -24,7 +24,7 @@ public class CommentsEndpointTest extends TestBase {
     public void getAllCommentsValidation() {
         given()
             .when()
-            .get(EndPoints.comments)
+            .get(Endpoints.COMMENTS.getEndpoint())
             .then()
             .assertThat().statusCode(SC_OK).contentType(ContentType.JSON)
             .extract().body().jsonPath().getList(ROOT_ELEMENT, Comment.class);
@@ -35,7 +35,7 @@ public class CommentsEndpointTest extends TestBase {
         List<Comment> commentList = given()
                                         .param(POST_ID_PARAMETER, POST_ID_NUMBER)
                                         .when()
-                                        .get(EndPoints.comments)
+                                        .get(Endpoints.COMMENTS.getEndpoint())
                                         .then()
                                         .assertThat().statusCode(SC_OK).contentType(ContentType.JSON)
                                         .extract().body().jsonPath().getList(ROOT_ELEMENT, Comment.class);
@@ -48,7 +48,7 @@ public class CommentsEndpointTest extends TestBase {
         List<Comment> commentList = given()
                                         .pathParam(POST_ID_PARAMETER, POST_ID_NUMBER)
                                         .when()
-                                        .get(EndPoints.commentsForPostId)
+                                        .get(Endpoints.COMMENTS_FOR_POST_ID.getEndpoint())
                                         .then()
                                         .assertThat().statusCode(SC_OK).contentType(ContentType.JSON)
                                         .extract().body().jsonPath().getList(ROOT_ELEMENT, Comment.class);
@@ -60,7 +60,7 @@ public class CommentsEndpointTest extends TestBase {
     public void emailFormatInCommentsValidation() {
         List<Comment> commentList = given()
                                         .when()
-                                        .get(EndPoints.comments)
+                                        .get(Endpoints.COMMENTS.getEndpoint())
                                         .then()
                                         .extract().body().jsonPath().getList(ROOT_ELEMENT, Comment.class);
         commentList.forEach(x -> assertTrue("Wrong email format. ", x.getEmail().matches(EMAIL_REGEX)));
