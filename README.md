@@ -1,7 +1,13 @@
 [![test](https://circleci.com/gh/mpechkurov/test-challenge.svg?style=svg)](https://circleci.com/gh/mpechkurov/test-challenge)
 
 # test-challenge
-Backend Test Challenge
+Backend Test Challenge for [JSONPlaceholder](https://jsonplaceholder.typicode.com)
+
+# Description
+Example of API testing for endpoints : 
+- /users
+- /posts
+- /comments
 
 
 # Tool 

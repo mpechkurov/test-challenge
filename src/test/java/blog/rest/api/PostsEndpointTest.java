@@ -42,7 +42,7 @@ public class PostsEndpointTest extends TestBase {
     public void getAllPostsValidation() {
         given()
             .when()
-            .get(EndPoints.posts)
+            .get(EndPoints.POSTS)
             .then()
             .assertThat().statusCode(SC_OK).contentType(ContentType.JSON)
             .extract().body().jsonPath().getList(ROOT_ELEMENT, Post.class);
@@ -54,10 +54,11 @@ public class PostsEndpointTest extends TestBase {
         List<Post> postList = given()
                                   .param(POST_USER_ID, userId)
                                   .when()
-                                  .get(EndPoints.posts)
+                                  .get(EndPoints.POSTS)
                                   .then()
                                   .assertThat().statusCode(SC_OK).contentType(ContentType.JSON)
                                   .extract().body().jsonPath().getList(ROOT_ELEMENT, Post.class);
+
         postList.forEach(x -> assertEquals("Wrong userId. ", EXPECTED_USER_ID, x.getUserId()));
     }
 
@@ -66,9 +67,10 @@ public class PostsEndpointTest extends TestBase {
         Post actualPost = given()
                               .contentType(ContentType.JSON)
                               .body(newPost)
-                              .post(EndPoints.posts)
+                              .post(EndPoints.POSTS)
                               .then().assertThat().statusCode(SC_CREATED).contentType(ContentType.JSON)
                               .extract().body().jsonPath().getObject(ROOT_ELEMENT, Post.class);
+
         assertTrue("Wrong response data. ", EqualsBuilder.reflectionEquals(newPost, actualPost, POST_ID));
     }
 
@@ -79,9 +81,10 @@ public class PostsEndpointTest extends TestBase {
                               .pathParam(POST_ID, POST_ID_NUMBER)
                               .contentType(ContentType.JSON)
                               .body(newPost)
-                              .put(EndPoints.posts_id)
+                              .put(EndPoints.POSTS_ID)
                               .then().assertThat().statusCode(SC_OK).contentType(ContentType.JSON)
                               .extract().body().jsonPath().getObject(ROOT_ELEMENT, Post.class);
+
         assertTrue("Wrong response data. ", EqualsBuilder.reflectionEquals(newPost, actualPost));
     }
 
@@ -93,9 +96,10 @@ public class PostsEndpointTest extends TestBase {
                               .pathParam(POST_ID, POST_ID_NUMBER)
                               .contentType(ContentType.JSON)
                               .body(body)
-                              .patch(EndPoints.posts_id)
+                              .patch(EndPoints.POSTS_ID)
                               .then().assertThat().statusCode(SC_OK).contentType(ContentType.JSON)
                               .extract().body().jsonPath().getObject(ROOT_ELEMENT, Post.class);
+
         assertTrue(EqualsBuilder.reflectionEquals(newPost, actualPost, POST_USER_ID, POST_BODY));
     }
 
@@ -104,7 +108,7 @@ public class PostsEndpointTest extends TestBase {
         given()
             .pathParam(POST_ID, POST_ID_NUMBER)
             .contentType(ContentType.JSON)
-            .delete(EndPoints.posts_id)
+            .delete(EndPoints.POSTS_ID)
             .then().assertThat().statusCode(SC_OK).contentType(ContentType.JSON);
     }
 

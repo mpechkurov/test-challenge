@@ -21,13 +21,14 @@ public class UsersEndpointTest extends TestBase {
     public void getUsersValidation() {
         List<User> userList = given()
                                   .when()
-                                  .get(EndPoints.users)
+                                  .get(EndPoints.USERS)
                                   .then()
                                   .assertThat().statusCode(SC_OK).contentType(ContentType.JSON)
                                   .extract()
                                   .body()
                                   .jsonPath()
                                   .getList(ROOT_ELEMENT, User.class);
+
         assertEquals("Endpoint return wrong user amount or user model. ", DEFAULT_USER_AMOUNT, userList.size());
     }
 }

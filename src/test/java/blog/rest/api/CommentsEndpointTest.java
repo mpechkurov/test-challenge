@@ -24,7 +24,7 @@ public class CommentsEndpointTest extends TestBase {
     public void getAllCommentsValidation() {
         given()
             .when()
-            .get(EndPoints.comments)
+            .get(EndPoints.COMMENTS)
             .then()
             .assertThat().statusCode(SC_OK).contentType(ContentType.JSON)
             .extract().body().jsonPath().getList(ROOT_ELEMENT, Comment.class);
@@ -35,10 +35,11 @@ public class CommentsEndpointTest extends TestBase {
         List<Comment> commentList = given()
                                         .param(POST_ID_PARAMETER, POST_ID_NUMBER)
                                         .when()
-                                        .get(EndPoints.comments)
+                                        .get(EndPoints.COMMENTS)
                                         .then()
                                         .assertThat().statusCode(SC_OK).contentType(ContentType.JSON)
                                         .extract().body().jsonPath().getList(ROOT_ELEMENT, Comment.class);
+
         assertEquals(EXPECTED_COMMENT_AMOUNT, commentList.size());
         commentList.forEach(x -> assertEquals("Wrong postId. ", POST_ID_NUMBER, (int) x.getPostId()));
     }
@@ -48,10 +49,11 @@ public class CommentsEndpointTest extends TestBase {
         List<Comment> commentList = given()
                                         .pathParam(POST_ID_PARAMETER, POST_ID_NUMBER)
                                         .when()
-                                        .get(EndPoints.commentsForPostId)
+                                        .get(EndPoints.COMMENTS_FOR_POST_ID)
                                         .then()
                                         .assertThat().statusCode(SC_OK).contentType(ContentType.JSON)
                                         .extract().body().jsonPath().getList(ROOT_ELEMENT, Comment.class);
+
         assertEquals(EXPECTED_COMMENT_AMOUNT, commentList.size());
         commentList.forEach(x -> assertEquals("Wrong postId. ", POST_ID_NUMBER, (int) x.getPostId()));
     }
@@ -60,9 +62,10 @@ public class CommentsEndpointTest extends TestBase {
     public void emailFormatInCommentsValidation() {
         List<Comment> commentList = given()
                                         .when()
-                                        .get(EndPoints.comments)
+                                        .get(EndPoints.COMMENTS)
                                         .then()
                                         .extract().body().jsonPath().getList(ROOT_ELEMENT, Comment.class);
+
         commentList.forEach(x -> assertTrue("Wrong email format. ", x.getEmail().matches(EMAIL_REGEX)));
     }
 }

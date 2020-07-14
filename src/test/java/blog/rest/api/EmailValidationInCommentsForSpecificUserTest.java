@@ -26,6 +26,7 @@ public class EmailValidationInCommentsForSpecificUserTest extends TestBase {
         String userId = userUtils.getUserIdByName(USER_NAME);
         List<String> postIdsForUser = userUtils.getAllPostIdsByUserId(userId);
         List<Comment> commentList = userUtils.getCommentsForPosts(postIdsForUser);
+
         commentList.forEach(x -> assertTrue("Wrong email format in comment.", x.getEmail().matches(EMAIL_REGEX)));
     }
 }

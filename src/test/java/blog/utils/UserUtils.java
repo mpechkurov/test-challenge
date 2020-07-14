@@ -18,7 +18,7 @@ public class UserUtils extends TestBase {
 
     public String getUserIdByName(String userName) {
         List<User> userList = given()
-                                  .get(EndPoints.users)
+                                  .get(EndPoints.USERS)
                                   .then()
                                   .extract().body().jsonPath().getList(".", User.class);
 
@@ -34,7 +34,7 @@ public class UserUtils extends TestBase {
         List<Post> postList = given()
                                   .param(USER_ID_PARAMETER, userId)
                                   .when()
-                                  .get(EndPoints.posts)
+                                  .get(EndPoints.POSTS)
                                   .then()
                                   .extract().body().jsonPath().getList(".", Post.class);
         return postList.stream().map(post -> Integer.toString(post.getId())).collect(Collectors.toList());
@@ -44,7 +44,7 @@ public class UserUtils extends TestBase {
         return given()
                    .pathParam(POST_ID_PARAMETER, postId)
                    .when()
-                   .get(EndPoints.commentsForPostId)
+                   .get(EndPoints.COMMENTS_FOR_POST_ID)
                    .then()
                    .extract().body().jsonPath().getList(ROOT_ELEMENT, Comment.class);
     }
